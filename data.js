@@ -37,29 +37,25 @@ var APP_DATA = {
           "yaw": -1.2015116321685326,
           "pitch": -0.41110865935999286,
           "rotation": 15.707963267948973,
-          "target": "1--",
-          "color": "#FFA500" // Orange for كنب برتقالي
+          "target": "1--"
         },
         {
           "yaw": -0.9685486604954452,
           "pitch": -0.41538324852417396,
           "rotation": 3.141592653589793,
-          "target": "2---",
-          "color": "#000000" // Black for كنب جلدي أسود
+          "target": "2---"
         },
         {
           "yaw": -0.7822285864379452,
           "pitch": -0.4038147197104962,
           "rotation": 3.141592653589793,
-          "target": "3---",
-          "color": "#4A4A4A" // Dark Gray for تصميم كلاسيكي قاتم
+          "target": "3---"
         },
         {
           "yaw": -0.5979895447576986,
           "pitch": -0.3816222578639561,
           "rotation": 3.141592653589793,
-          "target": "4-",
-          "color": "#8B4513" // Saddle Brown for مريح
+          "target": "4-"
         }
       ],
       "infoHotspots": [
@@ -67,8 +63,8 @@ var APP_DATA = {
           "yaw": -0.2133422575430597,
           "pitch": -0.3410039838876102,
           "title": "معلومات المنتج",
-          "pdfUrl": "path/to/your/file.pdf",
-          "text": "تفاصيل المنتج (سيظهر هذا النص إذا لم يتم تحديد ملف PDF)"
+          "text": "تفاصيل المنتج",
+          "pdfUrl": "https://drive.google.com/file/d/1XD80vGon6ZVe-rAc8fmTWKAf4enaPwM1/view?usp=sharing"
         }
       ]
     },
@@ -101,11 +97,18 @@ var APP_DATA = {
           "yaw": -0.8850553037864088,
           "pitch": -0.4109645360577652,
           "rotation": 3.141592653589793,
-          "target": "0-",
-          "color": "#3A4454" // Default color for الرئيسية
+          "target": "0-"
         }
       ],
-      "infoHotspots": []
+      "infoHotspots": [
+        {
+          "yaw": 0.5,
+          "pitch": -0.2,
+          "title": "مواصفات الكنب البرتقالي",
+          "text": "تفاصيل الكنب البرتقالي",
+          "pdfUrl": "https://example.com/sofa-orange.pdf"
+        }
+      ]
     },
     {
       "id": "2---",
@@ -132,11 +135,18 @@ var APP_DATA = {
           "yaw": -0.871389572482915,
           "pitch": -0.40459019916785266,
           "rotation": 3.141592653589793,
-          "target": "0-",
-          "color": "#3A4454" // Default color for الرئيسية
+          "target": "0-"
         }
       ],
-      "infoHotspots": []
+      "infoHotspots": [
+        {
+          "yaw": 0.3,
+          "pitch": -0.1,
+          "title": "مواصفات الكنب الجلدي الأسود",
+          "text": "تفاصيل الكنب الجلدي الأسود",
+          "pdfUrl": "https://example.com/black-leather-sofa.pdf"
+        }
+      ]
     },
     {
       "id": "3---",
@@ -167,11 +177,18 @@ var APP_DATA = {
           "yaw": -0.8832058962926084,
           "pitch": -0.4043219546843453,
           "rotation": 3.141592653589793,
-          "target": "0-",
-          "color": "#3A4454" // Default color for الرئيسية
+          "target": "0-"
         }
       ],
-      "infoHotspots": []
+      "infoHotspots": [
+        {
+          "yaw": 0.4,
+          "pitch": -0.15,
+          "title": "مواصفات التصميم الكلاسيكي",
+          "text": "تفاصيل التصميم الكلاسيكي القاتم",
+          "pdfUrl": "https://example.com/classic-design.pdf"
+        }
+      ]
     },
     {
       "id": "4-",
@@ -202,11 +219,18 @@ var APP_DATA = {
           "yaw": -0.9103508701504772,
           "pitch": -0.41050816082495345,
           "rotation": 3.141592653589793,
-          "target": "0-",
-          "color": "#3A4454" // Default color for الرئيسية
+          "target": "0-"
         }
       ],
-      "infoHotspots": []
+      "infoHotspots": [
+        {
+          "yaw": 0.6,
+          "pitch": -0.25,
+          "title": "مواصفات الكنب المريح",
+          "text": "تفاصيل الكنب المريح",
+          "pdfUrl": "https://example.com/comfort-sofa.pdf"
+        }
+      ]
     }
   ],
   "name": "Project Title",
@@ -216,4 +240,4 @@ var APP_DATA = {
     "fullscreenButton": false,
     "viewControlButtons": false
   }
-}
+};
