@@ -64,7 +64,7 @@ var APP_DATA = {
           "pitch": -0.3410039838876102,
           "title": "معلومات المنتج",
           "text": "تفاصيل المنتج",
-          "pdfUrl": "https://drive.google.com/file/d/1XD80vGon6ZVe-rAc8fmTWKAf4enaPwM1/view?usp=sharing"
+          "pdfUrl": "pdfs/view.pdf"
         }
       ]
     },
@@ -100,15 +100,7 @@ var APP_DATA = {
           "target": "0-"
         }
       ],
-      "infoHotspots": [
-        {
-          "yaw": 0.5,
-          "pitch": -0.2,
-          "title": "مواصفات الكنب البرتقالي",
-          "text": "تفاصيل الكنب البرتقالي",
-          "pdfUrl": "https://example.com/sofa-orange.pdf"
-        }
-      ]
+      "infoHotspots": []
     },
     {
       "id": "2---",
@@ -138,15 +130,7 @@ var APP_DATA = {
           "target": "0-"
         }
       ],
-      "infoHotspots": [
-        {
-          "yaw": 0.3,
-          "pitch": -0.1,
-          "title": "مواصفات الكنب الجلدي الأسود",
-          "text": "تفاصيل الكنب الجلدي الأسود",
-          "pdfUrl": "https://example.com/black-leather-sofa.pdf"
-        }
-      ]
+      "infoHotspots": []
     },
     {
       "id": "3---",
@@ -180,15 +164,7 @@ var APP_DATA = {
           "target": "0-"
         }
       ],
-      "infoHotspots": [
-        {
-          "yaw": 0.4,
-          "pitch": -0.15,
-          "title": "مواصفات التصميم الكلاسيكي",
-          "text": "تفاصيل التصميم الكلاسيكي القاتم",
-          "pdfUrl": "https://example.com/classic-design.pdf"
-        }
-      ]
+      "infoHotspots": []
     },
     {
       "id": "4-",
@@ -222,15 +198,7 @@ var APP_DATA = {
           "target": "0-"
         }
       ],
-      "infoHotspots": [
-        {
-          "yaw": 0.6,
-          "pitch": -0.25,
-          "title": "مواصفات الكنب المريح",
-          "text": "تفاصيل الكنب المريح",
-          "pdfUrl": "https://example.com/comfort-sofa.pdf"
-        }
-      ]
+      "infoHotspots": []
     }
   ],
   "name": "Project Title",
