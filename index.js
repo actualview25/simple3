@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2016 Google Inc. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -88,13 +88,13 @@
       pinFirstLevel: true
     });
 
-    // Create link hotspots.
+    // Create link hotspots with colored icons.
     data.linkHotspots.forEach(function(hotspot) {
       var element = createLinkHotspotElement(hotspot);
       scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
     });
 
-    // Create info hotspots.
+    // Create info hotspots with PDF viewer.
     data.infoHotspots.forEach(function(hotspot) {
       var element = createInfoHotspotElement(hotspot);
       scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
@@ -245,16 +245,44 @@
   }
 
   function createLinkHotspotElement(hotspot) {
-
     // Create wrapper element to hold icon and tooltip.
     var wrapper = document.createElement('div');
     wrapper.classList.add('hotspot');
     wrapper.classList.add('link-hotspot');
 
-    // Create image element.
-    var icon = document.createElement('img');
-    icon.src = 'img/link.png';
+    // Create colored icon element based on scene name or hotspot data.
+    var icon = document.createElement('div');
     icon.classList.add('link-hotspot-icon');
+    
+    // Add colored circle with arrow
+    icon.innerHTML = '<div class="colored-circle"></div><div class="arrow"></div>';
+    
+    // Apply color based on hotspot data or use default
+    var circle = icon.querySelector('.colored-circle');
+    if (hotspot.color) {
+      circle.style.backgroundColor = hotspot.color;
+    } else {
+      // Default colors based on scene name
+      var sceneData = findSceneDataById(hotspot.target);
+      if (sceneData) {
+        switch(sceneData.name) {
+          case 'كنب برتقالي':
+            circle.style.backgroundColor = '#FFA500'; // Orange
+            break;
+          case 'كنب جلدي أسود':
+            circle.style.backgroundColor = '#000000'; // Black
+            break;
+          case 'تصميم كلاسيكي قاتم':
+            circle.style.backgroundColor = '#4A4A4A'; // Dark Gray
+            break;
+          case 'مريح':
+            circle.style.backgroundColor = '#8B4513'; // Saddle Brown
+            break;
+          default:
+            circle.style.backgroundColor = '#3A4454'; // Default blue-gray
+        }
+      }
+    }
 
     // Set rotation transform.
     var transformProperties = [ '-ms-transform', '-webkit-transform', 'transform' ];
@@ -269,7 +297,6 @@
     });
 
     // Prevent touch and scroll events from reaching the parent element.
-    // This prevents the view control logic from interfering with the hotspot.
     stopTouchAndScrollEventPropagation(wrapper);
 
     // Create tooltip element.
@@ -285,11 +312,11 @@
   }
 
   function createInfoHotspotElement(hotspot) {
-
     // Create wrapper element to hold icon and tooltip.
     var wrapper = document.createElement('div');
     wrapper.classList.add('hotspot');
     wrapper.classList.add('info-hotspot');
+    wrapper.classList.add('info-hotspot-with-pdf');
 
     // Create hotspot/tooltip header.
     var header = document.createElement('div');
@@ -324,14 +351,42 @@
     header.appendChild(titleWrapper);
     header.appendChild(closeWrapper);
 
-    // Create text element.
-    var text = document.createElement('div');
-    text.classList.add('info-hotspot-text');
-    text.innerHTML = hotspot.text;
+    // Create content element with PDF viewer.
+    var content = document.createElement('div');
+    content.classList.add('info-hotspot-content');
+    
+    if (hotspot.pdfUrl) {
+      // Create PDF viewer container
+      var pdfViewer = document.createElement('div');
+      pdfViewer.classList.add('pdf-viewer-container');
+      
+      // Create iframe for PDF
+      var pdfIframe = document.createElement('iframe');
+      pdfIframe.src = hotspot.pdfUrl;
+      pdfIframe.classList.add('pdf-iframe');
+      pdfIframe.setAttribute('frameborder', '0');
+      
+      // Create download link
+      var downloadLink = document.createElement('a');
+      downloadLink.href = hotspot.pdfUrl;
+      downloadLink.classList.add('pdf-download-link');
+      downloadLink.target = '_blank';
+      downloadLink.textContent = 'تنزيل PDF';
+      
+      pdfViewer.appendChild(pdfIframe);
+      pdfViewer.appendChild(downloadLink);
+      content.appendChild(pdfViewer);
+    } else {
+      // Fallback to text if no PDF URL
+      var text = document.createElement('div');
+      text.classList.add('info-hotspot-text');
+      text.innerHTML = hotspot.text;
+      content.appendChild(text);
+    }
 
-    // Place header and text into wrapper element.
+    // Place header and content into wrapper element.
     wrapper.appendChild(header);
-    wrapper.appendChild(text);
+    wrapper.appendChild(content);
 
     // Create a modal for the hotspot content to appear on mobile mode.
     var modal = document.createElement('div');
@@ -351,7 +406,6 @@
     modal.querySelector('.info-hotspot-close-wrapper').addEventListener('click', toggle);
 
     // Prevent touch and scroll events from reaching the parent element.
-    // This prevents the view control logic from interfering with the hotspot.
     stopTouchAndScrollEventPropagation(wrapper);
 
     return wrapper;
