@@ -88,7 +88,7 @@
       pinFirstLevel: true
     });
 
-    // Create link hotspots with colored icons.
+    // Create link hotspots.
     data.linkHotspots.forEach(function(hotspot) {
       var element = createLinkHotspotElement(hotspot);
       scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
@@ -245,6 +245,7 @@
   }
 
   function createLinkHotspotElement(hotspot) {
+
     // Create wrapper element to hold icon and tooltip.
     var wrapper = document.createElement('div');
     wrapper.classList.add('hotspot');
@@ -262,35 +263,13 @@
       icon.style[property] = 'rotate(' + hotspot.rotation + 'rad)';
     }
 
-    // Apply color filter based on scene name
-    var sceneData = findSceneDataById(hotspot.target);
-    if (sceneData) {
-      var colorFilter = '';
-      switch(sceneData.name) {
-        case 'كنب برتقالي':
-          colorFilter = 'invert(50%) sepia(100%) saturate(500%) hue-rotate(0deg)'; // Orange
-          break;
-        case 'كنب جلدي أسود':
-          colorFilter = 'invert(0%)'; // Black
-          break;
-        case 'تصميم كلاسيكي قاتم':
-          colorFilter = 'invert(20%)'; // Dark Gray
-          break;
-        case 'مريح':
-          colorFilter = 'invert(30%) sepia(100%) saturate(500%) hue-rotate(20deg)'; // Brown
-          break;
-        default:
-          colorFilter = 'invert(40%) sepia(20%) saturate(500%) hue-rotate(180deg)'; // Default blue-gray
-      }
-      icon.style.filter = colorFilter;
-    }
-
     // Add click event handler.
     wrapper.addEventListener('click', function() {
       switchScene(findSceneById(hotspot.target));
     });
 
     // Prevent touch and scroll events from reaching the parent element.
+    // This prevents the view control logic from interfering with the hotspot.
     stopTouchAndScrollEventPropagation(wrapper);
 
     // Create tooltip element.
@@ -306,11 +285,11 @@
   }
 
   function createInfoHotspotElement(hotspot) {
+
     // Create wrapper element to hold icon and tooltip.
     var wrapper = document.createElement('div');
     wrapper.classList.add('hotspot');
     wrapper.classList.add('info-hotspot');
-    wrapper.classList.add('info-hotspot-with-pdf');
 
     // Create hotspot/tooltip header.
     var header = document.createElement('div');
@@ -332,11 +311,20 @@
     title.innerHTML = hotspot.title;
     titleWrapper.appendChild(title);
 
+    // Create close element.
+    var closeWrapper = document.createElement('div');
+    closeWrapper.classList.add('info-hotspot-close-wrapper');
+    var closeIcon = document.createElement('img');
+    closeIcon.src = 'img/close.png';
+    closeIcon.classList.add('info-hotspot-close-icon');
+    closeWrapper.appendChild(closeIcon);
+
     // Construct header element.
     header.appendChild(iconWrapper);
     header.appendChild(titleWrapper);
+    header.appendChild(closeWrapper);
 
-    // Create content element with PDF viewer (hidden by default).
+    // Create content element with PDF viewer.
     var content = document.createElement('div');
     content.classList.add('info-hotspot-content');
     
@@ -350,6 +338,7 @@
       pdfIframe.src = hotspot.pdfUrl;
       pdfIframe.classList.add('pdf-iframe');
       pdfIframe.setAttribute('frameborder', '0');
+      pdfIframe.setAttribute('allow', 'autoplay');
       
       // Create download link
       var downloadLink = document.createElement('a');
@@ -373,31 +362,25 @@
     wrapper.appendChild(header);
     wrapper.appendChild(content);
 
-    // Add hover events for desktop
-    if (!document.body.classList.contains('mobile')) {
-      wrapper.addEventListener('mouseenter', function() {
-        wrapper.classList.add('hover-visible');
-      });
-      
-      wrapper.addEventListener('mouseleave', function() {
-        wrapper.classList.remove('hover-visible');
-      });
-    } else {
-      // For mobile, keep click behavior
-      var modal = document.createElement('div');
-      modal.classList.add('info-hotspot-modal');
-      document.body.appendChild(modal);
+    // Create a modal for the hotspot content to appear on mobile mode.
+    var modal = document.createElement('div');
+    modal.innerHTML = wrapper.innerHTML;
+    modal.classList.add('info-hotspot-modal');
+    document.body.appendChild(modal);
 
-      var toggle = function() {
-        wrapper.classList.toggle('visible');
-        modal.classList.toggle('visible');
-      };
+    var toggle = function() {
+      wrapper.classList.toggle('visible');
+      modal.classList.toggle('visible');
+    };
 
-      // Show content when hotspot is clicked on mobile.
-      wrapper.addEventListener('click', toggle);
-    }
+    // Show content when hotspot is clicked.
+    wrapper.querySelector('.info-hotspot-header').addEventListener('click', toggle);
+
+    // Hide content when close icon is clicked.
+    modal.querySelector('.info-hotspot-close-wrapper').addEventListener('click', toggle);
 
     // Prevent touch and scroll events from reaching the parent element.
+    // This prevents the view control logic from interfering with the hotspot.
     stopTouchAndScrollEventPropagation(wrapper);
 
     return wrapper;
