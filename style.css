@@ -359,7 +359,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   width: 100%;
   height: 100%;
   cursor: pointer;
-  transition: filter 0.3s ease;
 }
 
 .link-hotspot-tooltip {
@@ -431,8 +430,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: block;
 }
 
-/* Info hotspot with PDF viewer on hover */
-
+/* Info hotspot - Hidden by default and show on hover */
 .info-hotspot {
   line-height: 1.2em;
   opacity: 0.9;
@@ -444,7 +442,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   opacity: 1;
 }
 
-.info-hotspot-with-pdf .info-hotspot-header {
+.info-hotspot .info-hotspot-header {
   width: 40px;
   height: 40px;
   border-radius: 20px;
@@ -452,29 +450,29 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   cursor: pointer;
 }
 
-.mobile .info-hotspot-with-pdf .info-hotspot-header {
+.mobile .info-hotspot .info-hotspot-header {
   width: 50px;
   height: 50px;
   border-radius: 25px;
 }
 
-.info-hotspot-with-pdf .info-hotspot-icon-wrapper {
+.info-hotspot .info-hotspot-icon-wrapper {
   width: 40px;
   height: 40px;
 }
 
-.mobile .info-hotspot-with-pdf .info-hotspot-icon-wrapper {
+.mobile .info-hotspot .info-hotspot-icon-wrapper {
   width: 50px;
   height: 50px;
 }
 
-.info-hotspot-with-pdf .info-hotspot-icon {
+.info-hotspot .info-hotspot-icon {
   width: 90%;
   height: 90%;
   margin: 5%;
 }
 
-.info-hotspot-with-pdf .info-hotspot-title-wrapper {
+.info-hotspot .info-hotspot-title-wrapper {
   position: absolute;
   left: 40px;
   top: 0;
@@ -484,24 +482,51 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   overflow: hidden;
 }
 
-.info-hotspot-with-pdf .info-hotspot-title-wrapper:before {
+.mobile .info-hotspot .info-hotspot-title-wrapper {
+  left: 50px;
+  height: 50px;
+}
+
+.info-hotspot .info-hotspot-title-wrapper:before {
   content: '';
   display: inline-block;
   vertical-align: middle;
   height: 100%;
 }
 
-.info-hotspot-with-pdf .info-hotspot-title {
+.info-hotspot .info-hotspot-title {
   display: inline-block;
   vertical-align: middle;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
   user-select: text;
 }
 
-.info-hotspot-with-pdf .info-hotspot-content {
+.info-hotspot .info-hotspot-close-wrapper {
+  position: absolute;
+  left: 260px;
+  top: 0;
+  height: 40px;
+  width: 40px;
+  border-top-right-radius: 5px;
+  background-color: rgb(78,88,104);
+}
+
+.mobile .info-hotspot .info-hotspot-close-wrapper {
+  left: 260px;
+  height: 50px;
+  width: 50px;
+}
+
+.info-hotspot .info-hotspot-close-icon {
+  width: 70%;
+  height: 70%;
+  margin: 15%;
+}
+
+/* Info hotspot content - Hidden by default */
+.info-hotspot .info-hotspot-content {
   position: absolute;
   width: 400px;
   height: 500px;
@@ -515,28 +540,31 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   transform: translateY(-10px);
   transition: all 0.3s ease;
   z-index: 1000;
+  overflow: hidden;
 }
 
-.mobile .info-hotspot-with-pdf .info-hotspot-content {
+.mobile .info-hotspot .info-hotspot-content {
+  top: 50px;
   width: 90vw;
   left: -45vw;
   height: 70vh;
 }
 
-/* Show PDF viewer on hover for desktop */
-.desktop .info-hotspot-with-pdf.hover-visible .info-hotspot-content {
+/* Show on hover for desktop */
+.desktop .info-hotspot.hover-visible .info-hotspot-content {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Show on click for mobile */
-.mobile .info-hotspot-with-pdf.visible .info-hotspot-content {
+.mobile .info-hotspot.visible .info-hotspot-content {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
 }
 
+/* PDF Viewer Styles */
 .pdf-viewer-container {
   width: 100%;
   height: 100%;
@@ -567,8 +595,17 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   background-color: #4A5A6A;
 }
 
-/* Info hotspot modal for mobile */
+/* Hide close button on hover mode for desktop */
+.desktop .info-hotspot .info-hotspot-close-wrapper {
+  display: none;
+}
 
+/* Show close button only for mobile */
+.mobile .info-hotspot .info-hotspot-close-wrapper {
+  display: block;
+}
+
+/* Info hotspot modal for mobile */
 .info-hotspot-modal {
   top: 0;
   left: 0;
@@ -670,29 +707,18 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   margin: 15%;
 }
 
-.info-hotspot-modal .info-hotspot-text {
+.info-hotspot-modal .info-hotspot-content {
   position: absolute;
-  top: 110px;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
-  padding: 10px;
-  background-color: rgb(58,68,84);
-  background-color: rgba(58,68,84,0.8);
-  overflow-y: auto;
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-in-out;
-  transition: opacity 0.3s ease-in-out;
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.info-hotspot-modal.visible .info-hotspot-text {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s ease-in-out 0.4s;
-  transition: opacity 0.3s ease-in-out 0.4s;
+  top: 120px;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  width: auto;
+  height: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  overflow: hidden;
 }
 
 /* View control buttons */
@@ -746,65 +772,4 @@ body.view-control-buttons .viewControlButton {
 }
 .viewControlButton-6 {
   margin-left: 105px;
-}
-/* PDF Viewer Styles */
-.pdf-viewer-container {
-  width: 100%;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-}
-
-.pdf-iframe {
-  width: 100%;
-  height: 350px;
-  border: none;
-  background-color: white;
-  border-radius: 5px;
-  margin-bottom: 10px;
-}
-
-.pdf-download-link {
-  display: block;
-  padding: 10px;
-  background-color: #4a5a6a;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-.pdf-download-link:hover {
-  background-color: #5a6a7a;
-}
-
-/* Adjust for smaller hotspots */
-.info-hotspot .info-hotspot-content {
-  width: 420px;
-  height: auto;
-  max-height: 500px;
-}
-
-/* Mobile adjustments */
-.mobile .pdf-viewer-container {
-  height: 300px;
-}
-
-.mobile .pdf-iframe {
-  height: 250px;
-}
-
-/* Modal adjustments for PDF */
-.info-hotspot-modal .pdf-viewer-container {
-  height: calc(70vh - 100px);
-}
-
-.info-hotspot-modal .pdf-iframe {
-  height: calc(100% - 50px);
-}
-
-.info-hotspot-modal .pdf-download-link {
-  margin-top: 10px;
 }
