@@ -37,33 +37,38 @@ var APP_DATA = {
           "yaw": -1.2015116321685326,
           "pitch": -0.41110865935999286,
           "rotation": 15.707963267948973,
-          "target": "1--"
+          "target": "1--",
+          "color": "#FFA500" // Orange for كنب برتقالي
         },
         {
           "yaw": -0.9685486604954452,
           "pitch": -0.41538324852417396,
           "rotation": 3.141592653589793,
-          "target": "2---"
+          "target": "2---",
+          "color": "#000000" // Black for كنب جلدي أسود
         },
         {
           "yaw": -0.7822285864379452,
           "pitch": -0.4038147197104962,
           "rotation": 3.141592653589793,
-          "target": "3---"
+          "target": "3---",
+          "color": "#4A4A4A" // Dark Gray for تصميم كلاسيكي قاتم
         },
         {
           "yaw": -0.5979895447576986,
           "pitch": -0.3816222578639561,
           "rotation": 3.141592653589793,
-          "target": "4-"
+          "target": "4-",
+          "color": "#8B4513" // Saddle Brown for مريح
         }
       ],
       "infoHotspots": [
         {
           "yaw": -0.2133422575430597,
           "pitch": -0.3410039838876102,
-          "title": "Title",
-          "text": "Text"
+          "title": "معلومات المنتج",
+          "pdfUrl": "path/to/your/file.pdf",
+          "text": "تفاصيل المنتج (سيظهر هذا النص إذا لم يتم تحديد ملف PDF)"
         }
       ]
     },
@@ -96,7 +101,8 @@ var APP_DATA = {
           "yaw": -0.8850553037864088,
           "pitch": -0.4109645360577652,
           "rotation": 3.141592653589793,
-          "target": "0-"
+          "target": "0-",
+          "color": "#3A4454" // Default color for الرئيسية
         }
       ],
       "infoHotspots": []
@@ -126,7 +132,8 @@ var APP_DATA = {
           "yaw": -0.871389572482915,
           "pitch": -0.40459019916785266,
           "rotation": 3.141592653589793,
-          "target": "0-"
+          "target": "0-",
+          "color": "#3A4454" // Default color for الرئيسية
         }
       ],
       "infoHotspots": []
@@ -160,7 +167,8 @@ var APP_DATA = {
           "yaw": -0.8832058962926084,
           "pitch": -0.4043219546843453,
           "rotation": 3.141592653589793,
-          "target": "0-"
+          "target": "0-",
+          "color": "#3A4454" // Default color for الرئيسية
         }
       ],
       "infoHotspots": []
@@ -194,7 +202,8 @@ var APP_DATA = {
           "yaw": -0.9103508701504772,
           "pitch": -0.41050816082495345,
           "rotation": 3.141592653589793,
-          "target": "0-"
+          "target": "0-",
+          "color": "#3A4454" // Default color for الرئيسية
         }
       ],
       "infoHotspots": []
@@ -207,4 +216,4 @@ var APP_DATA = {
     "fullscreenButton": false,
     "viewControlButtons": false
   }
-};
+}
