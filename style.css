@@ -1,4 +1,26 @@
-* {
+[1:28 ص، 2025/12/25] M.n: /**
+ * Copyright 2016 Google Inc. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+'use strict';
+
+(function() {
+  var Marzipano = window.Marzipano;
+  var bowser = window.bowser;
+  var screenfull = window.screenfull;
+  var data = window.…
+[1:31 ص، 2025/12/25] M.n: * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -334,7 +356,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: none;
 }
 
-/* Link hotspot */
+/* Link hotspot with colored icons */
 
 .link-hotspot {
   width: 60px;
@@ -344,6 +366,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   opacity: 0.9;
   -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;
+  cursor: pointer;
 }
 
 .no-touch .link-hotspot:hover {
@@ -356,43 +379,61 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 }
 
 .link-hotspot-icon {
-  width: 100%;
-  height: 100%;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin: 10px;
   cursor: pointer;
+}
+
+.link-hotspot-icon .colored-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3A4454; /* Default color */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.link-hotspot-icon .arrow {
+  position: absolute;
+  top: 15px;
+  left: 13px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid white;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.no-touch .link-hotspot:hover .link-hotspot-icon .colored-circle {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
 .link-hotspot-tooltip {
   position: absolute;
   left: 100%;
   top: 14px; /* ( 60 - (16 + 2*8) ) / 2 */
-
   margin-left: 3px;
-
   font-size: 16px;
-
   max-width: 300px;
-
   padding: 8px 10px;
-
   border-radius: 5px;
-
   background-color: rgb(58,68,84);
   background-color: rgba(58,68,84,0.8);
-
   color: #fff;
-
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-
   cursor: pointer;
-
   opacity: 0;
-
   -ms-transform: translateX(-8px);
   -webkit-transform: translateX(-8px);
   transform: translateX(-8px);
-
   -webkit-transition: -ms-transform 0.3s,
                       -webkit-transform 0.3s,
                       transform 0.3s,
@@ -403,7 +444,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               opacity 0.3s;
 }
 
-.mobile .link-hotspot {
+.mobile .link-hotspot-tooltip {
   top: 19px; /* ( 70 - (16 + 2*8) ) / 2 */
 }
 
@@ -430,8 +471,140 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: block;
 }
 
-/* Info hotspot */
+/* Info hotspot with PDF viewer */
 
+.info-hotspot-with-pdf .info-hotspot-header {
+  background-color: #3A4454;
+  cursor: pointer;
+}
+
+.info-hotspot-with-pdf .info-hotspot-content {
+  position: absolute;
+  width: 400px;
+  height: 500px;
+  top: 40px;
+  left: -180px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.info-hotspot-with-pdf.visible .info-hotspot-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pdf-viewer-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+  border-radius: 8px 8px 0 0;
+}
+
+.pdf-download-link {
+  display: block;
+  padding: 12px;
+  background-color: #3A4454;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0 0 8px 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.pdf-download-link:hover {
+  background-color: #4A5A6A;
+}
+
+/* Info hotspot modal for PDF viewer */
+
+.info-hotspot-modal .info-hotspot-content {
+  background-color: white;
+  height: 70vh;
+  margin: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.info-hotspot-modal .pdf-viewer-container {
+  height: 100%;
+}
+
+/* Mobile styles for PDF viewer */
+.mobile .info-hotspot-with-pdf .info-hotspot-content {
+  width: 90vw;
+  left: -45vw;
+  height: 70vh;
+}
+
+/* View control buttons */
+
+.viewControlButton {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103,115,131);
+  background-color: rgba(103,115,131,0.8);
+}
+
+body.view-control-buttons .viewControlButton {
+  display: block;
+}
+
+/* Hide controls when width is too small */
+@media (max-width: 600px) {
+  body.view-control-buttons .viewControlButton {
+    display: none;
+  }
+}
+
+.viewControlButton .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+/* Center is at margin-left: -20px */
+.viewControlButton-1 {
+  margin-left: -145px;
+}
+.viewControlButton-2 {
+  margin-left: -95px;
+}
+.viewControlButton-3 {
+  margin-left: -45px;
+}
+.viewControlButton-4 {
+  margin-left: 5px;
+}
+.viewControlButton-5 {
+  margin-left: 55px;
+}
+.viewControlButton-6 {
+  margin-left: 105px;
+}
+
+/* Existing info hotspot styles (kept for backward compatibility) */
 .info-hotspot {
   line-height: 1.2em;
   opacity: 0.9;
@@ -539,7 +712,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 .info-hotspot .info-hotspot-title {
   display: inline-block;
   vertical-align: middle;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -605,7 +777,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   border-bottom-left-radius: 5px;
   overflow-y: auto;
   visibility: hidden;
-  /* rotate(90deg) causes transition flicker on Firefox 58 */
   -ms-transform: perspective(200px) rotateX(-89.999deg);
   -webkit-transform: perspective(200px) rotateX(-89.999deg);
   transform: perspective(200px) rotateX(-89.999deg);
@@ -620,7 +791,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               -webkit-transform 0.3s,
               transform 0.3s,
               visibility 0s 0.3s;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -726,7 +896,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 .info-hotspot-modal .info-hotspot-title {
   display: inline-block;
   vertical-align: middle;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -763,7 +932,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   opacity: 0;
   -webkit-transition: opacity 0.3s ease-in-out;
   transition: opacity 0.3s ease-in-out;
-
   -moz-user-select: text;
   -webkit-user-select: text;
   -ms-user-select: text;
@@ -774,57 +942,3 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   opacity: 1;
   -webkit-transition: opacity 0.3s ease-in-out 0.4s;
   transition: opacity 0.3s ease-in-out 0.4s;
-}
-
-/* View control buttons */
-
-.viewControlButton {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-  background-color: rgb(103,115,131);
-  background-color: rgba(103,115,131,0.8);
-}
-
-body.view-control-buttons .viewControlButton {
-  display: block;
-}
-
-/* Hide controls when width is too small */
-@media (max-width: 600px) {
-  body.view-control-buttons .viewControlButton {
-    display: none;
-  }
-}
-
-.viewControlButton .icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-}
-
-/* Center is at margin-left: -20px */
-.viewControlButton-1 {
-  margin-left: -145px;
-}
-.viewControlButton-2 {
-  margin-left: -95px;
-}
-.viewControlButton-3 {
-  margin-left: -45px;
-}
-.viewControlButton-4 {
-  margin-left: 5px;
-}
-.viewControlButton-5 {
-  margin-left: 55px;
-}
-.viewControlButton-6 {
-  margin-left: 105px;
-}
