@@ -1,26 +1,4 @@
-[1:28 ص، 2025/12/25] M.n: /**
- * Copyright 2016 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-'use strict';
-
-(function() {
-  var Marzipano = window.Marzipano;
-  var bowser = window.bowser;
-  var screenfull = window.screenfull;
-  var data = window.…
-[1:31 ص، 2025/12/25] M.n: * {
+* {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -356,7 +334,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: none;
 }
 
-/* Link hotspot with colored icons */
+/* Link hotspot */
 
 .link-hotspot {
   width: 60px;
@@ -366,7 +344,6 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   opacity: 0.9;
   -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;
-  cursor: pointer;
 }
 
 .no-touch .link-hotspot:hover {
@@ -379,61 +356,44 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 }
 
 .link-hotspot-icon {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  margin: 10px;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
-}
-
-.link-hotspot-icon .colored-circle {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #3A4454; /* Default color */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-}
-
-.link-hotspot-icon .arrow {
-  position: absolute;
-  top: 15px;
-  left: 13px;
-  width: 0;
-  height: 0;
-  border-left: 7px solid white;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-}
-
-.no-touch .link-hotspot:hover .link-hotspot-icon .colored-circle {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: filter 0.3s ease;
 }
 
 .link-hotspot-tooltip {
   position: absolute;
   left: 100%;
   top: 14px; /* ( 60 - (16 + 2*8) ) / 2 */
+
   margin-left: 3px;
+
   font-size: 16px;
+
   max-width: 300px;
+
   padding: 8px 10px;
+
   border-radius: 5px;
+
   background-color: rgb(58,68,84);
   background-color: rgba(58,68,84,0.8);
+
   color: #fff;
+
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+
   cursor: pointer;
+
   opacity: 0;
+
   -ms-transform: translateX(-8px);
   -webkit-transform: translateX(-8px);
   transform: translateX(-8px);
+
   -webkit-transition: -ms-transform 0.3s,
                       -webkit-transform 0.3s,
                       transform 0.3s,
@@ -444,7 +404,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
               opacity 0.3s;
 }
 
-.mobile .link-hotspot-tooltip {
+.mobile .link-hotspot {
   top: 19px; /* ( 70 - (16 + 2*8) ) / 2 */
 }
 
@@ -471,11 +431,74 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   display: block;
 }
 
-/* Info hotspot with PDF viewer */
+/* Info hotspot with PDF viewer on hover */
+
+.info-hotspot {
+  line-height: 1.2em;
+  opacity: 0.9;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.no-touch .info-hotspot:hover {
+  opacity: 1;
+}
 
 .info-hotspot-with-pdf .info-hotspot-header {
-  background-color: #3A4454;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgb(103,115,131);
   cursor: pointer;
+}
+
+.mobile .info-hotspot-with-pdf .info-hotspot-header {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.info-hotspot-with-pdf .info-hotspot-icon-wrapper {
+  width: 40px;
+  height: 40px;
+}
+
+.mobile .info-hotspot-with-pdf .info-hotspot-icon-wrapper {
+  width: 50px;
+  height: 50px;
+}
+
+.info-hotspot-with-pdf .info-hotspot-icon {
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+}
+
+.info-hotspot-with-pdf .info-hotspot-title-wrapper {
+  position: absolute;
+  left: 40px;
+  top: 0;
+  width: 0;
+  height: 40px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.info-hotspot-with-pdf .info-hotspot-title-wrapper:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.info-hotspot-with-pdf .info-hotspot-title {
+  display: inline-block;
+  vertical-align: middle;
+
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
 
 .info-hotspot-with-pdf .info-hotspot-content {
@@ -494,7 +517,21 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   z-index: 1000;
 }
 
-.info-hotspot-with-pdf.visible .info-hotspot-content {
+.mobile .info-hotspot-with-pdf .info-hotspot-content {
+  width: 90vw;
+  left: -45vw;
+  height: 70vh;
+}
+
+/* Show PDF viewer on hover for desktop */
+.desktop .info-hotspot-with-pdf.hover-visible .info-hotspot-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Show on click for mobile */
+.mobile .info-hotspot-with-pdf.visible .info-hotspot-content {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
@@ -530,293 +567,7 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
   background-color: #4A5A6A;
 }
 
-/* Info hotspot modal for PDF viewer */
-
-.info-hotspot-modal .info-hotspot-content {
-  background-color: white;
-  height: 70vh;
-  margin: 20px;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.info-hotspot-modal .pdf-viewer-container {
-  height: 100%;
-}
-
-/* Mobile styles for PDF viewer */
-.mobile .info-hotspot-with-pdf .info-hotspot-content {
-  width: 90vw;
-  left: -45vw;
-  height: 70vh;
-}
-
-/* View control buttons */
-
-.viewControlButton {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-  background-color: rgb(103,115,131);
-  background-color: rgba(103,115,131,0.8);
-}
-
-body.view-control-buttons .viewControlButton {
-  display: block;
-}
-
-/* Hide controls when width is too small */
-@media (max-width: 600px) {
-  body.view-control-buttons .viewControlButton {
-    display: none;
-  }
-}
-
-.viewControlButton .icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-}
-
-/* Center is at margin-left: -20px */
-.viewControlButton-1 {
-  margin-left: -145px;
-}
-.viewControlButton-2 {
-  margin-left: -95px;
-}
-.viewControlButton-3 {
-  margin-left: -45px;
-}
-.viewControlButton-4 {
-  margin-left: 5px;
-}
-.viewControlButton-5 {
-  margin-left: 55px;
-}
-.viewControlButton-6 {
-  margin-left: 105px;
-}
-
-/* Existing info hotspot styles (kept for backward compatibility) */
-.info-hotspot {
-  line-height: 1.2em;
-  opacity: 0.9;
-  -webkit-transition: opacity 0.2s 0.2s;
-  transition: opacity 0.2s 0.2s;
-}
-
-.no-touch .info-hotspot:hover {
-  opacity: 1;
-  -webkit-transition: opacity 0.2s;
-  transition: opacity 0.2s;
-}
-
-.info-hotspot.visible {
-  opacity: 1;
-}
-
-.info-hotspot .info-hotspot-header {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  background-color: rgb(103,115,131);
-  cursor: pointer;
-  -webkit-transition: width 0.3s ease-in-out 0.5s,
-                      border-radius 0.3s ease-in-out 0.5s;
-  transition: width 0.3s ease-in-out 0.5s,
-              border-radius 0.3s ease-in-out 0.5s;
-}
-
-.mobile .info-hotspot .info-hotspot-header {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-}
-
-.desktop.no-touch .info-hotspot .info-hotspot-header:hover {
-  width: 260px;
-  border-radius: 5px;
-  -webkit-transition: width 0.3s ease-in-out,
-                      border-radius 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out,
-              border-radius 0.3s ease-in-out;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-header,
-.desktop.no-touch .info-hotspot.visible .info-hotspot-header:hover {
-  width: 260px;
-  border-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  -webkit-transition: width 0.3s ease-in-out,
-                      border-radius 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out,
-              border-radius 0.3s ease-in-out;
-}
-
-.info-hotspot .info-hotspot-icon-wrapper {
-  width: 40px;
-  height: 40px;
-}
-
-.mobile .info-hotspot .info-hotspot-icon-wrapper {
-  width: 50px;
-  height: 50px;
-}
-
-.info-hotspot .info-hotspot-icon {
-  width: 90%;
-  height: 90%;
-  margin: 5%;
-}
-
-.info-hotspot .info-hotspot-title-wrapper {
-  position: absolute;
-  left: 40px;
-  top: 0;
-  width: 0;
-  height: 40px;
-  padding: 0;
-  overflow: hidden;
-  -webkit-transition: width 0s 0.4s,
-                      padding 0s 0.4s;
-  transition: width 0s 0.4s,
-              padding 0s 0.4s;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-title-wrapper,
-.desktop.no-touch .info-hotspot .info-hotspot-header:hover .info-hotspot-title-wrapper {
-  width: 220px;
-  padding: 0 5px;
-  -webkit-transition: width 0s 0.4s,
-                      padding 0s 0.4s;
-  transition: width 0s 0.4s,
-              padding 0s 0.4s;
-}
-
-.info-hotspot .info-hotspot-title-wrapper:before {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-}
-
-.info-hotspot .info-hotspot-title {
-  display: inline-block;
-  vertical-align: middle;
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.info-hotspot .info-hotspot-close-wrapper {
-  position: absolute;
-  left: 260px;
-  top: 0;
-  height: 40px;
-  width: 40px;
-  border-top-right-radius: 5px;
-  background-color: rgb(78,88,104);
-  visibility: hidden;
-  -ms-transform: perspective(200px) rotateY(90deg);
-  -webkit-transform: perspective(200px) rotateY(90deg);
-  transform: perspective(200px) rotateY(90deg);
-  -ms-transform-origin: 0 50% 0;
-  -webkit-transform-origin: 0 50% 0;
-  transform-origin: 0 50% 0;
-  -webkit-transition: -ms-transform 0.3s 0.3s,
-                      -webkit-transform 0.3s 0.3s,
-                      transform 0.3s 0.3s,
-                      visibility 0s 0.6s;
-  transition: -ms-transform 0.3s 0.3s,
-              -webkit-transform 0.3s 0.3s,
-              transform 0.3s 0.3s,
-              visibility 0s 0.6s;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-close-wrapper {
-  visibility: visible;
-  -ms-transform: perspective(200px) rotateY(0deg);
-  -webkit-transform: perspective(200px) rotateY(0deg);
-  transform: perspective(200px) rotateY(0deg);
-  -webkit-transition: -ms-transform 0.3s,
-                      -webkit-transform 0.3s,
-                      transform 0.3s,
-                      visibility 0s 0s;
-  transition: -ms-transform 0.3s,
-              -webkit-transform 0.3s,
-              transform 0.3s,
-              visibility 0s 0s;
-}
-
-.info-hotspot .info-hotspot-close-icon {
-  width: 70%;
-  height: 70%;
-  margin: 15%;
-}
-
-.info-hotspot .info-hotspot-text {
-  position: absolute;
-  width: 300px;
-  height: auto;
-  max-height: 200px;
-  top: 40px;
-  left: 0;
-  padding: 10px;
-  background-color: rgb(58,68,84);
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  overflow-y: auto;
-  visibility: hidden;
-  -ms-transform: perspective(200px) rotateX(-89.999deg);
-  -webkit-transform: perspective(200px) rotateX(-89.999deg);
-  transform: perspective(200px) rotateX(-89.999deg);
-  -ms-transform-origin: 50% 0 0;
-  -webkit-transform-origin: 50% 0 0;
-  transform-origin: 50% 0 0;
-  -webkit-transition: -ms-transform 0.3s,
-                      -webkit-transform 0.3s,
-                      transform 0.3s,
-                      visibility 0s 0.3s;
-  transition: -ms-transform 0.3s,
-              -webkit-transform 0.3s,
-              transform 0.3s,
-              visibility 0s 0.3s;
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-text {
-  visibility: visible;
-  -ms-transform: perspective(200px) rotateX(0deg);
-  -webkit-transform: perspective(200px) rotateX(0deg);
-  transform: perspective(200px) rotateX(0deg);
-  -webkit-transition: -ms-transform 0.3s 0.3s,
-                      -webkit-transform 0.3s 0.3s,
-                      transform 0.3s 0.3s,
-                      visibility 0s 0s;
-  transition: -ms-transform 0.3s 0.3s,
-              -webkit-transform 0.3s 0.3s,
-              transform 0.3s 0.3s,
-              visibility 0s 0s;
-}
-
-/* Info hotspot modal */
-
-.desktop .info-hotspot-modal {
-  display: none;
-}
+/* Info hotspot modal for mobile */
 
 .info-hotspot-modal {
   top: 0;
@@ -942,3 +693,57 @@ body.view-control-buttons .viewControlButton {
   opacity: 1;
   -webkit-transition: opacity 0.3s ease-in-out 0.4s;
   transition: opacity 0.3s ease-in-out 0.4s;
+}
+
+/* View control buttons */
+
+.viewControlButton {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgb(103,115,131);
+  background-color: rgba(103,115,131,0.8);
+}
+
+body.view-control-buttons .viewControlButton {
+  display: block;
+}
+
+/* Hide controls when width is too small */
+@media (max-width: 600px) {
+  body.view-control-buttons .viewControlButton {
+    display: none;
+  }
+}
+
+.viewControlButton .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+/* Center is at margin-left: -20px */
+.viewControlButton-1 {
+  margin-left: -145px;
+}
+.viewControlButton-2 {
+  margin-left: -95px;
+}
+.viewControlButton-3 {
+  margin-left: -45px;
+}
+.viewControlButton-4 {
+  margin-left: 5px;
+}
+.viewControlButton-5 {
+  margin-left: 55px;
+}
+.viewControlButton-6 {
+  margin-left: 105px;
+}
