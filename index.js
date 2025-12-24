@@ -250,45 +250,39 @@
     wrapper.classList.add('hotspot');
     wrapper.classList.add('link-hotspot');
 
-    // Create colored icon element based on scene name or hotspot data.
-    var icon = document.createElement('div');
+    // Create image element.
+    var icon = document.createElement('img');
+    icon.src = 'img/link.png';
     icon.classList.add('link-hotspot-icon');
-    
-    // Add colored circle with arrow
-    icon.innerHTML = '<div class="colored-circle"></div><div class="arrow"></div>';
-    
-    // Apply color based on hotspot data or use default
-    var circle = icon.querySelector('.colored-circle');
-    if (hotspot.color) {
-      circle.style.backgroundColor = hotspot.color;
-    } else {
-      // Default colors based on scene name
-      var sceneData = findSceneDataById(hotspot.target);
-      if (sceneData) {
-        switch(sceneData.name) {
-          case 'كنب برتقالي':
-            circle.style.backgroundColor = '#FFA500'; // Orange
-            break;
-          case 'كنب جلدي أسود':
-            circle.style.backgroundColor = '#000000'; // Black
-            break;
-          case 'تصميم كلاسيكي قاتم':
-            circle.style.backgroundColor = '#4A4A4A'; // Dark Gray
-            break;
-          case 'مريح':
-            circle.style.backgroundColor = '#8B4513'; // Saddle Brown
-            break;
-          default:
-            circle.style.backgroundColor = '#3A4454'; // Default blue-gray
-        }
-      }
-    }
 
     // Set rotation transform.
     var transformProperties = [ '-ms-transform', '-webkit-transform', 'transform' ];
     for (var i = 0; i < transformProperties.length; i++) {
       var property = transformProperties[i];
       icon.style[property] = 'rotate(' + hotspot.rotation + 'rad)';
+    }
+
+    // Apply color filter based on scene name
+    var sceneData = findSceneDataById(hotspot.target);
+    if (sceneData) {
+      var colorFilter = '';
+      switch(sceneData.name) {
+        case 'كنب برتقالي':
+          colorFilter = 'invert(50%) sepia(100%) saturate(500%) hue-rotate(0deg)'; // Orange
+          break;
+        case 'كنب جلدي أسود':
+          colorFilter = 'invert(0%)'; // Black
+          break;
+        case 'تصميم كلاسيكي قاتم':
+          colorFilter = 'invert(20%)'; // Dark Gray
+          break;
+        case 'مريح':
+          colorFilter = 'invert(30%) sepia(100%) saturate(500%) hue-rotate(20deg)'; // Brown
+          break;
+        default:
+          colorFilter = 'invert(40%) sepia(20%) saturate(500%) hue-rotate(180deg)'; // Default blue-gray
+      }
+      icon.style.filter = colorFilter;
     }
 
     // Add click event handler.
@@ -338,20 +332,11 @@
     title.innerHTML = hotspot.title;
     titleWrapper.appendChild(title);
 
-    // Create close element.
-    var closeWrapper = document.createElement('div');
-    closeWrapper.classList.add('info-hotspot-close-wrapper');
-    var closeIcon = document.createElement('img');
-    closeIcon.src = 'img/close.png';
-    closeIcon.classList.add('info-hotspot-close-icon');
-    closeWrapper.appendChild(closeIcon);
-
     // Construct header element.
     header.appendChild(iconWrapper);
     header.appendChild(titleWrapper);
-    header.appendChild(closeWrapper);
 
-    // Create content element with PDF viewer.
+    // Create content element with PDF viewer (hidden by default).
     var content = document.createElement('div');
     content.classList.add('info-hotspot-content');
     
@@ -388,22 +373,29 @@
     wrapper.appendChild(header);
     wrapper.appendChild(content);
 
-    // Create a modal for the hotspot content to appear on mobile mode.
-    var modal = document.createElement('div');
-    modal.innerHTML = wrapper.innerHTML;
-    modal.classList.add('info-hotspot-modal');
-    document.body.appendChild(modal);
+    // Add hover events for desktop
+    if (!document.body.classList.contains('mobile')) {
+      wrapper.addEventListener('mouseenter', function() {
+        wrapper.classList.add('hover-visible');
+      });
+      
+      wrapper.addEventListener('mouseleave', function() {
+        wrapper.classList.remove('hover-visible');
+      });
+    } else {
+      // For mobile, keep click behavior
+      var modal = document.createElement('div');
+      modal.classList.add('info-hotspot-modal');
+      document.body.appendChild(modal);
 
-    var toggle = function() {
-      wrapper.classList.toggle('visible');
-      modal.classList.toggle('visible');
-    };
+      var toggle = function() {
+        wrapper.classList.toggle('visible');
+        modal.classList.toggle('visible');
+      };
 
-    // Show content when hotspot is clicked.
-    wrapper.querySelector('.info-hotspot-header').addEventListener('click', toggle);
-
-    // Hide content when close icon is clicked.
-    modal.querySelector('.info-hotspot-close-wrapper').addEventListener('click', toggle);
+      // Show content when hotspot is clicked on mobile.
+      wrapper.addEventListener('click', toggle);
+    }
 
     // Prevent touch and scroll events from reaching the parent element.
     stopTouchAndScrollEventPropagation(wrapper);
