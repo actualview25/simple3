@@ -747,3 +747,64 @@ body.view-control-buttons .viewControlButton {
 .viewControlButton-6 {
   margin-left: 105px;
 }
+/* PDF Viewer Styles */
+.pdf-viewer-container {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-iframe {
+  width: 100%;
+  height: 350px;
+  border: none;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.pdf-download-link {
+  display: block;
+  padding: 10px;
+  background-color: #4a5a6a;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.pdf-download-link:hover {
+  background-color: #5a6a7a;
+}
+
+/* Adjust for smaller hotspots */
+.info-hotspot .info-hotspot-content {
+  width: 420px;
+  height: auto;
+  max-height: 500px;
+}
+
+/* Mobile adjustments */
+.mobile .pdf-viewer-container {
+  height: 300px;
+}
+
+.mobile .pdf-iframe {
+  height: 250px;
+}
+
+/* Modal adjustments for PDF */
+.info-hotspot-modal .pdf-viewer-container {
+  height: calc(70vh - 100px);
+}
+
+.info-hotspot-modal .pdf-iframe {
+  height: calc(100% - 50px);
+}
+
+.info-hotspot-modal .pdf-download-link {
+  margin-top: 10px;
+}
